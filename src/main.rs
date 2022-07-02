@@ -51,6 +51,11 @@ pub struct RustPasswordGenerator {
     #[nwg_layout_item(layout: grid, col: 1, row: 2, col_span: 5)]
     result_text: nwg::TextInput,
     
+    #[nwg_control(text: "Copy")]
+    #[nwg_layout_item(layout: grid, col: 7, row: 2)]
+    #[nwg_events( OnButtonClick: [ RustPasswordGenerator::copy_password])]
+    copy_btn: nwg::Button,
+    
     #[nwg_control(text: "Generate")]
     #[nwg_layout_item(layout: grid, col: 4, row: 3)]
     #[nwg_events( OnButtonClick: [ RustPasswordGenerator::generate_password ] )]
@@ -85,6 +90,11 @@ impl RustPasswordGenerator {
             password.push(get_random_symbol(is_upper, is_lower, is_number));
         }
         self.result_text.set_text(&password);
+    }
+    
+    fn copy_password(&self) {
+        let text = self.result_text.text();
+        nwg::Clipboard::set_data_text(&self.window, &text);
     }
     
     fn show_error(&self, message: &str) {

@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 native-windows-derive = { version = "1.0.5"}
-native-windows-gui = { version = "1.0.12"}
+native-windows-gui = { version = "1.0.12", features = ["clipboard"]}
 rand = "0.8.5"
 
 
