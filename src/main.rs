@@ -39,7 +39,7 @@ pub struct RustPasswordGenerator {
     #[nwg_layout_item(layout: grid, col: 0, row: 1)]
     pass_len_tb: nwg::Label,
     
-    #[nwg_control(text: "12", flags: "VISIBLE|NUMBER", align: nwg::HTextAlign::Center, focus: true)]
+    #[nwg_control(text: "12", flags: "VISIBLE|NUMBER", align: nwg::HTextAlign::Center)]
     #[nwg_layout_item(layout: grid, col: 1, row: 1, col_span: 3)]
     passlen: nwg::TextInput,
     
@@ -51,7 +51,7 @@ pub struct RustPasswordGenerator {
     #[nwg_layout_item(layout: grid, col: 1, row: 2, col_span: 5)]
     result_text: nwg::TextInput,
     
-    #[nwg_control(text: "Copy")]
+    #[nwg_control(text: "Copy", enabled: false)]
     #[nwg_layout_item(layout: grid, col: 7, row: 2)]
     #[nwg_events( OnButtonClick: [ RustPasswordGenerator::copy_password])]
     copy_btn: nwg::Button,
@@ -89,6 +89,10 @@ impl RustPasswordGenerator {
         for _ in 0..pass_length {
             password.push(get_random_symbol(is_upper, is_lower, is_number));
         }
+        
+        self.copy_btn.set_enabled(true);
+        self.result_text.set_focus();
+        
         self.result_text.set_text(&password);
     }
     
